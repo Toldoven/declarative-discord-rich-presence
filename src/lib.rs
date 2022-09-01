@@ -1,7 +1,7 @@
 //! This library is an abstraction build on top of [`discord_rich_presence`]
 //! crate that allows you to use it in a more declarative way.
 //! 
-//! When created it starts an infine loop on a new thread that
+//! When created it starts an infinite loop on a new thread that
 //! will constantly try to reconnect the client if it's
 //! enabled.
 //! 

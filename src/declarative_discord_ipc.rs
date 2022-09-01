@@ -23,7 +23,7 @@ impl DeclarativeDiscordIpcClient {
 
     /// Creates a new `DeclarativeDiscordIpcClient`.
     /// 
-    /// It also starts an infine loop on a new thread that
+    /// It also starts an infinite loop on a new thread that
     /// will constantly try to reconnect the client if it's
     /// enabled.
     ///
