@@ -1,0 +1,16 @@
+[package]
+name = "declarative-discord-rich-presence"
+version = "0.1.0"
+edition = "2021"
+description = "An abstraction build on top of discord-rich-presence that makes possible to use it in a more declarative way"
+readme = "README.md"
+license = "MIT"
+keywords = ["discord", "rich-presence", "ipc"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+discord-rich-presence = "0.2.3"
+
+# [patch.crates-io]
+# discord-rich-presence = { path = "../discord-rich-presence" }
