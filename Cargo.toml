@@ -10,7 +10,7 @@ license = "MIT"
 keywords = ["discord", "rich-presence", "ipc"]
 
 [dependencies]
-discord-rich-presence = "0.2.3"
-
-[patch.crates-io]
 discord-rich-presence = { path = "./crates/discord-rich-presence" }
+
+# [patch.crates-io]
+# discord-rich-presence = { path = "./crates/discord-rich-presence" }
