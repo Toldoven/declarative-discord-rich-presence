@@ -4,11 +4,11 @@ use declarative_discord_rich_presence::activity::Activity;
 #[test]
 fn test() -> Result<(), Box<dyn std::error::Error>>{
 
-    let mut client = DeclarativeDiscordIpcClient::new("771124766517755954");
+    let client = DeclarativeDiscordIpcClient::new("771124766517755954");
 
     client.enable();
 
-    std::thread::sleep(std::time::Duration::from_secs(5));
+    // std::thread::sleep(std::time::Duration::from_secs(5));
 
     println!("Setting activity...");
 

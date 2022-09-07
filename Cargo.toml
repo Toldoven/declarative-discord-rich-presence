@@ -13,4 +13,4 @@ keywords = ["discord", "rich-presence", "ipc"]
 discord-rich-presence = "0.2.3"
 
 [patch.crates-io]
-discord-rich-presence = { path = "../discord-rich-presence" }
+discord-rich-presence = { path = "./crates/discord-rich-presence" }

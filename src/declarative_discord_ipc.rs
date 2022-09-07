@@ -4,6 +4,7 @@ use discord_rich_presence::{DiscordIpc, DiscordIpcClient, activity::Activity};
 #[doc(hidden)]
 pub struct IpcClientWrapper {
     pub enabled: bool,
+    pub activity: Option<Activity>,
     pub client: DiscordIpcClient,
 }
 
@@ -11,6 +12,7 @@ impl IpcClientWrapper {
     fn new(client_id: &str) -> IpcClientWrapper {
         IpcClientWrapper {
             enabled: false,
+            activity: None,
             client: DiscordIpcClient::new(client_id).unwrap()
         }
     }
@@ -75,15 +77,22 @@ impl DeclarativeDiscordIpcClient {
             thread::sleep(Duration::from_secs(1));
 
             let mut lock = clone.lock().unwrap();
+            // let activity = &lock.activity.unwrap().clone();
 
             if !lock.enabled {
                 if lock.client.connected { lock.client.close().ok(); }
                 continue;
-            }
+            };
 
             if lock.client.connected { continue };
 
-            lock.client.connect().ok();
+            let connect = lock.client.connect();
+
+            let activity = lock.activity.clone();
+
+            if connect.is_ok() && activity.is_some() {
+                lock.client.set_activity(activity.unwrap()).ok();
+            }
 
         }});
 
@@ -100,9 +109,11 @@ impl DeclarativeDiscordIpcClient {
     /// If the `set_activity` function failed, it tries to
     /// reconnect, and only returns `Err` if it failed to
     /// send the payload after reconnecting.
-    pub fn set_activity(&mut self, activity_payload: Activity) -> Result<(), Box<dyn Error>> {
+    pub fn set_activity(&self, activity_payload: Activity) -> Result<(), Box<dyn Error>> {
 
         let mut lock = self.0.lock().unwrap();
+        
+        lock.activity = Some(activity_payload.clone());
 
         if !lock.client.connected { return Ok(()) }
 
@@ -119,9 +130,11 @@ impl DeclarativeDiscordIpcClient {
     /// Works exactly like `set_activity`
     /// 
     /// [`set_activity`]: #method.set_activity
-    pub fn clear_activity(&mut self) -> Result<(), Box<dyn Error>> {
+    pub fn clear_activity(&self) -> Result<(), Box<dyn Error>> {
 
         let mut lock = self.0.lock().unwrap();
+
+        lock.activity = None;
 
         if !lock.client.connected { return Ok(()) }
 
